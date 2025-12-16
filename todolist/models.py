@@ -6,3 +6,4 @@ class Todo(models.Model):
    description = models.TextField()
    status = models.BooleanField(default=True)
 
+
