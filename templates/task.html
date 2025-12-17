@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Todolist{%  endblock %}
+{% block content %}
+<h3>All Tasks : {{ count_all }}</h3>
+<table class="table table-success table-striped-columns">
+  <thead>
+    <tr>
+      <th scope="col">S.No</th>
+      <th scope="col">Title</th>
+      <th scope="col">Description</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for task in tasks %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{task.title}}</td>
+      <td>{{task.description}}</td>
+      <td>{{task.Status}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{%  endblock %}

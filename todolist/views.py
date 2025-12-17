@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404,get_list_or_404
 from django.http import HttpResponse
+from . models import Todo
 
 # Create your views here.
 def home(request):
@@ -25,8 +26,28 @@ def home(request):
     return render(request, 'home.html', context)
 
 
-def about_us(request):
-    return HttpResponse("<h1> I live in a small village </h1>")
+def Tasks(request):
+    tasks = get_list_or_404(Todo)
+    count_all = len(tasks)
+    context = {
+        'tasks':tasks,
+        'count_all':count_all,
+    }
+    return render(request, 'task.html', context)
+
+# def Tasks(request):
+#    tasks = Todo.objects.all()
+#    count_all = tasks.count()
+#    complete = Todo.objects.filter(status = True).count()
+#    incomplete = Todo.objects.filter(status = False).count()
+#    context = {
+#       "tasks" : tasks,
+#       "count_all": count_all,
+#       "complete_tasks": complete,
+#       "incomplete_tasks": incomplete,
+#    }
+#    return render(request,'task.html', context)
+
 
 def contact(request):
     return HttpResponse("<h1> contact me thorugh the email </h1>")
