@@ -2,24 +2,35 @@
 {% block title %}Todolist{%  endblock %}
 {% block content %}
 <h3>All Tasks : {{ count_all }}</h3>
-<table class="table table-success table-striped-columns">
-  <thead>
-    <tr>
-      <th scope="col">S.No</th>
-      <th scope="col">Title</th>
-      <th scope="col">Description</th>
-      <th scope="col">Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for task in tasks %}
-    <tr>
-      <th scope="row">{{ forloop.counter }}</th>
-      <td>{{task.title}}</td>
-      <td>{{task.description}}</td>
-      <td>{{task.Status}}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<div class="container-fluid ms-0">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">S.No</th>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for task in tasks %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{task.title}}</td>
+        <td>{{task.description}}</td>
+        <td>
+          {% if task.status %}
+          <span class="text-success">Completed</span>
+          {% else %}
+          <span class="text-danger">Pending</span>
+          {% endif %}
+        </td>
+        <td><a href="{% url 'update_data' task.id %}" class="btn btn-primary">Edit</a></td>
+        <td><a href="{% url 'mark_data' task.id %}" class="btn btn-success">Mark</a></td>
+        <td><a href="{% url 'delete_data' task.id %}" class="btn btn-danger">Delete</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {%  endblock %}

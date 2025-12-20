@@ -1,6 +1,6 @@
-from django.shortcuts import render, get_object_or_404,get_list_or_404
+from django.shortcuts import render, get_object_or_404,get_list_or_404, redirect
 from django.http import HttpResponse
-from . models import Todo
+from . models import Todo, Todolist
 
 # Create your views here.
 def home(request):
@@ -46,8 +46,48 @@ def Tasks(request):
 #       "complete_tasks": complete,
 #       "incomplete_tasks": incomplete,
 #    }
+#    print(type(tasks))
 #    return render(request,'task.html', context)
 
 
 def contact(request):
     return HttpResponse("<h1> contact me thorugh the email </h1>")
+
+
+def create_data(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        Todo.objects.create(title = title, description =description )
+        return redirect('task')
+    return render(request, 'create_data.html')
+
+def update_data(request, id):
+    todo = Todo.objects.get(id = id)
+    if request.method == 'POST':
+        todo.title = request.POST.get('title')
+        todo.description = request.POST.get('description')
+        todo.save()
+        return redirect('task')
+    return render(request, 'update_data.html', {'todo': todo})
+
+# def with_slug(request, todo_name):
+#     todo = Todolist.objects.get(slug = todo_name)
+#     if request.method == 'POST':
+#         todo.title = request.POST.get('title')
+#         todo.description = request.POST.get('description')
+#         todo.save()
+#         return redirect('create_data')
+#     return render(request, 'update_data.html', {'todo': todo})
+
+def mark_data(request, id):
+    todo = Todo.objects.get(id = id)
+    todo.status = not todo.status
+    todo.save()
+    return redirect('task')
+
+
+def delete_data(request, id):
+    todo = Todo.objects.get(id = id)
+    todo.delete()
+    return redirect('task')

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+   <form method="POST">
+      {% csrf_token %}
+      <div class="mb-3">
+         <label for="exampleInputEmail1" class="form-label">Title</label>
+         <input type="text" name="title" value="{{ todo.title }}"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>
+      <div class="form-floating mb-3">
+         <textarea class="form-control"  name="description"   placeholder="" id="floatingTextarea"></textarea>
+         <label for="floatingTextarea">{{todo.description}}</label>
+      </div>
+      <button type="submit" class="btn btn-primary">update</button>
+   </form>
+</div>
+{% endblock %}
+
